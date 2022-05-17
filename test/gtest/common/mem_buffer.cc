@@ -77,20 +77,21 @@ bool mem_buffer::is_rocm_managed_supported()
 {
 #if HAVE_ROCM
     int device_id, has_managed_mem;
+    hipError_t ret;
+    void * dptr;
+    hipPointerAttribute_t attr;
     if ((hipGetDevice(&device_id) == hipSuccess) &&
             (hipDeviceGetAttribute(&has_managed_mem,
                                    hipDeviceAttributeManagedMemory,
                                    device_id) == hipSuccess) &&
             has_managed_mem) {
-        hipError_t ret;
-        void * dptr;
-          hipPointerAttribute_t attr;
         ret = hipMallocManaged(&dptr, 64);
         if (ret == hipSuccess) {
             ret = hipPointerGetAttributes(&attr, dptr);
             if (ret == hipSuccess) {
                 hipFree(dptr);
-                if (attr.memoryType == hipMemoryTypeUnified) return true;
+                if (attr.memoryType == hipMemoryTypeUnified)
+                    return true;
             }
         }
     }
