@@ -45,7 +45,6 @@ ucp_rkey_get_tl_rkey(ucp_rkey_h rkey, ucp_md_index_t rkey_index)
         return UCT_INVALID_RKEY;
     }
 
-    ucs_assert(rkey_index < ucs_popcount(rkey->md_map));
     return rkey->tl_rkey[rkey_index].rkey.rkey;
 }
 
