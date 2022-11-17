@@ -22,17 +22,18 @@
 #include <uct/api/v2/uct_v2.h>
 #include <hsa_ext_amd.h>
 
-static ucs_config_field_t uct_rocm_copy_md_config_table[] = {
-    {"", "", NULL,
-     ucs_offsetof(uct_rocm_copy_md_config_t, super),
-     UCS_CONFIG_TYPE_TABLE(uct_md_config_table)},
+static ucs_config_field_t uct_rocm_copy_md_config_table[] =
+        {{"", "", NULL, ucs_offsetof(uct_rocm_copy_md_config_t, super),
+          UCS_CONFIG_TYPE_TABLE(uct_md_config_table)},
 
-    {"RCACHE", "try", "Enable using memory registration cache",
-     ucs_offsetof(uct_rocm_copy_md_config_t, enable_rcache),
-     UCS_CONFIG_TYPE_TERNARY},
+         {"RCACHE", "try", "Enable using memory registration cache",
+          ucs_offsetof(uct_rocm_copy_md_config_t, enable_rcache),
+          UCS_CONFIG_TYPE_TERNARY},
 
-    {NULL}
-};
+         {"", "", NULL, ucs_offsetof(uct_rocm_copy_md_config_t, rcache),
+          UCS_CONFIG_TYPE_TABLE(uct_md_config_rcache_table)},
+
+         {NULL}};
 
 static ucs_status_t
 uct_rocm_copy_md_query(uct_md_h md, uct_md_attr_v2_t *md_attr)
@@ -401,6 +402,7 @@ uct_rocm_copy_md_open(uct_component_h component, const char *md_name,
     md->reg_cost        = UCS_LINEAR_FUNC_ZERO;
 
     if (md_config->enable_rcache != UCS_NO) {
+        uct_md_set_rcache_params(&rcache_params, &md_config->rcache);
         rcache_params.region_struct_size = sizeof(uct_rocm_copy_rcache_region_t);
         rcache_params.alignment          = ucs_get_page_size();
         rcache_params.max_alignment      = ucs_get_page_size();
