@@ -12,17 +12,27 @@
 CUDA_OPT = $(shell echo ${DEB_BUILD_PROFILES} | grep -qw cuda \
 	&& echo --with-cuda=/usr/local/cuda || echo --without-cuda)
 
+ROCM_OPT = $(shell echo ${DEB_BUILD_PROFILES} | grep -qw rocm \
+	&& echo --with-rocm=/opt/rocm || echo --without-rocm)
+
 XPMEM_OPT = $(shell echo ${DEB_BUILD_PROFILES} | grep -qw xpmem \
 	&& echo --with-xpmem || echo --without-xpmem)
 
 %:
-	dh $@ 
+	dh $@
 
 override_dh_auto_configure:
 	./contrib/configure-release-mt --prefix=/usr \
 		--enable-examples --without-java --without-go \
-		$(CUDA_OPT) $(XPMEM_OPT)
+		$(CUDA_OPT) $(ROCM_OPT) $(XPMEM_OPT)
 	chmod +x debian/rules
+
+override_dh_builddeb:
+	if [ "" != "$(shell echo ${DEB_BUILD_PROFILES} | grep -w rocm)" ]; then \
+		dh_builddeb -- -Zgzip -z9; \
+	else \
+		dh_builddeb; \
+	fi
 
 # We may have a single package or two packages. We can't tell in advance.
 # Therefore set destdir for the default of multiple packages (that also
