@@ -3,6 +3,7 @@
 # Copyright (C) UT-Battelle, LLC. 2014-2015. ALL RIGHTS RESERVED.
 # Copyright (C) The University of Tennessee and The University
 #               of Tennessee Research Foundation. 2016. ALL RIGHTS RESERVED.
+# Copyright (C) Advanced Micro Devices, Inc. 2025. ALL RIGHTS RESERVED.
 #
 # See file LICENSE for terms.
 #
@@ -81,6 +82,7 @@ EXTRA_DIST += debian/copyright
 EXTRA_DIST += debian/control
 EXTRA_DIST += debian/ucx.install
 EXTRA_DIST += debian/ucx-cuda.install
+EXTRA_DIST += debian/ucx-rocm.install
 EXTRA_DIST += debian/rules
 EXTRA_DIST += debian/source/format
 EXTRA_DIST += ucx.pc.in

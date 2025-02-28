@@ -49,7 +49,7 @@ BuildRequires: knem
 BuildRequires: librdmacm-devel
 %endif
 %if %{with rocm}
-BuildRequires: hsa-rocr-dev
+BuildRequires: hsa-rocr-devel
 %endif
 %if %{with xpmem}
 BuildRequires: pkgconfig(cray-xpmem)
@@ -310,6 +310,7 @@ Provides Radeon Open Compute (ROCm) Runtime support for UCX.
 %files rocm
 %{_libdir}/ucx/libuct_rocm.so.*
 %{_libdir}/ucx/libucm_rocm.so.*
+%{_libdir}/ucx/libucx_perftest_rocm.so.*
 
 %if %{with gdrcopy}
 %package rocmgdr
@@ -383,6 +384,8 @@ Provides oneAPI Level Zero (ZE) Runtime support for UCX.
 %endif
 
 %changelog
+* Thu Feb 27 2025 Yiltan Temucin <yiltan@amd.com> 1.17.0-1
+- Improved ROCm support
 * Tue Oct 31 2023 Yossi Itigin <yosefe@nvidia.com> 1.17.0-1
 - Bump version to 1.17.0
 * Fri Apr 28 2023 Yossi Itigin <yosefe@nvidia.com> 1.16.0-1
