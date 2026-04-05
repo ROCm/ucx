@@ -67,11 +67,9 @@ static hsa_status_t uct_rocm_ipc_pack_key(void *address, size_t length,
         return status;
     }
 
-    status = hsa_amd_ipc_memory_create(base_ptr, size, &key->ipc);
-    if (status != HSA_STATUS_SUCCESS) {
-        ucs_error("Failed to create ipc for %p/%lx", address, length);
-        return status;
-    }
+    /* Skip hsa_amd_ipc_memory_create: it permanently pins GPU memory at
+       the HSA driver level with no release API for the creating process. */
+    memset(&key->ipc, 0, sizeof(key->ipc));
 
     key->address = (uintptr_t)base_ptr;
     key->length  = size;

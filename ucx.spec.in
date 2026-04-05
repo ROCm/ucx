@@ -357,7 +357,7 @@ Summary: UCX ROCm GPU support
 Group: System Environment/Libraries
 
 %description rocm
-Provides Radeon Open Compute (ROCm) Runtime support for UCX.
+Provides ROCm Runtime support for UCX.
 
 %files rocm
 %{_libdir}/ucx/libuct_rocm.so.*

@@ -74,7 +74,7 @@ RMA         Remote Memory Access
 RNDV        Rendezvous protocol
 RnR         Receiver Not Ready
 RoCE        RDMA over Converged Ethernet
-ROCm        Radeon Open Compute platform (AMD)
+ROCm        ROCm platform (AMD)
 RTE         Run Time Environment
 RX          Receive
 skb         Socket Buffer
